@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { AboutUsComponent } from './about-us/about-us.component';
+import { AboutUsComponent } from './components/about-us/about-us.component';
+import { FilenotfoundComponent } from './components/filenotfound/filenotfound.component';
 
 const routes: Routes = [
   {
@@ -9,7 +10,14 @@ const routes: Routes = [
   },
   {
     path: 'contact',
-    component: AboutUsComponent
+    // For redirection from route
+    // redirectTo: '404'
+    // Lazy loading: ContactModule
+    loadChildren: () => import("./modules/contact/contact.module").then(module => module.ContactModule)
+  },
+  {
+    path: '404',
+    component: FilenotfoundComponent
   }
 ];
 

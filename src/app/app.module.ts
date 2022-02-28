@@ -7,9 +7,11 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { CommonModule } from '@angular/common';
 import { TableComponent } from './table/table.component';
 import { FormsModule } from '@angular/forms';
-import { CustomDirective } from './custom.directive';
-import { SentenceCasePipe } from './sentence-case.pipe';
-import { AboutUsComponent } from './about-us/about-us.component';
+import { CustomDirective } from './directives/custom.directive';
+import { SentenceCasePipe } from './pipes/sentence-case.pipe';
+import { AboutUsComponent } from './components/about-us/about-us.component';
+import { FilenotfoundComponent } from './components/filenotfound/filenotfound.component';
+import { CommonService } from './services/common.service';
 
 @NgModule({
   declarations: [
@@ -17,7 +19,8 @@ import { AboutUsComponent } from './about-us/about-us.component';
     TableComponent,
     CustomDirective,
     SentenceCasePipe,
-    AboutUsComponent
+    AboutUsComponent,
+    FilenotfoundComponent
   ],
   imports: [
     BrowserModule,
@@ -26,7 +29,7 @@ import { AboutUsComponent } from './about-us/about-us.component';
     BrowserAnimationsModule,
     FormsModule
   ],
-  providers: [],
+  providers: [CommonService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
