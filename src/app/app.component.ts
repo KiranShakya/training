@@ -22,10 +22,11 @@ export class AppComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    /* setInterval(() => {
-      this.list = [...this.list, 'D'];
-      this.listOfObj = {...this.listOfObj, age: 30};
-    }, 3000); */
+    setInterval(() => {
+      /* this.list = [...this.list, 'D'];
+      this.listOfObj = {...this.listOfObj, age: 30}; */
+      this.name += 'a';
+    }, 3000);
     this.commonService.visitChangeObj.subscribe(visits => {
       this.visits = visits;
     })
@@ -33,5 +34,9 @@ export class AppComponent implements OnInit {
 
   newName(name: string) {
     this.name = name;
+  }
+
+  onOutput(param: boolean) {
+    console.log('Got', param);
   }
 }
