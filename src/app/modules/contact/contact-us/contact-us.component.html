@@ -1,1 +1,50 @@
 <p>contact-us works!</p>
+<h1>Reactive Form</h1>
+<form [formGroup]="contactForm" (ngSubmit)="onSubmitReactive()">
+  <div *ngIf="contactForm.invalid">
+    <div *ngIf="contactForm.controls['name'].invalid">
+      Invalid name
+      <span>{{ contactForm.controls["name"].errors | json }}</span>
+    </div>
+    <div *ngIf="contactForm.controls['email'].invalid">
+      Invalid email<span>{{
+        contactForm.controls["email"].errors | json
+      }}</span>
+    </div>
+  </div>
+  <div>
+    <input formControlName="name" placeholder="name" />
+  </div>
+  <div>
+    <input formControlName="email" placeholder="email" />
+  </div>
+  <div>
+    <textarea formControlName="message" placeholder="any message?"></textarea>
+  </div>
+  <button type="submit">Submit</button>
+</form>
+<h1>Template Driven Form</h1>
+<div>
+  <input required [(ngModel)]="name" #modelName="ngModel" placeholder="name" />
+  <span *ngIf="modelName.invalid"
+    >Invalid name
+    <span>{{ modelName.errors | json }}</span>
+  </span>
+</div>
+
+<div>
+  <input
+    required
+    email
+    [(ngModel)]="email"
+    #modelEmail="ngModel"
+    placeholder="email"
+  />
+  <span *ngIf="modelEmail.invalid"
+    >Invalid email<span>{{ modelEmail.errors | json }}</span>
+  </span>
+</div>
+<div>
+  <textarea [(ngModel)]="message" placeholder="any message?"></textarea>
+</div>
+<button type="submit" (click)="onSubmit()">Submit</button>
