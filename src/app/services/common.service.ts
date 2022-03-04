@@ -1,5 +1,6 @@
+import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable, Subject } from 'rxjs';
+import { Observable, Subject, takeUntil } from 'rxjs';
 
 /*
 @Injectable({
@@ -11,7 +12,7 @@ export class CommonService {
   private visitChangeSub: Subject<number> = new Subject<number>();
   private keyValuePair: Map<string, any> = new Map<string, any>();
 
-  constructor() {
+  constructor(private readonly httpClient: HttpClient) {
     this.visitChangeObj = this.visitChangeSub.asObservable();
   }
 
@@ -28,5 +29,18 @@ export class CommonService {
     const latestCount = lastCount + 1;
     this.setValue('visitCount', latestCount);
     this.visitChangeSub.next(lastCount);
+  }
+
+  createAuthor(authorData: Record<string, any>) {
+    // const header = { 'api-key': 'ABCD' };
+    this.httpClient
+      .post('https://jsonplaceholder.typicode.com', {
+        // headers: header,
+        // observe: 'body', // 'body' | 'response' | 'events'
+        params: authorData
+      })
+      .subscribe((response) => {
+        console.log('HttpClient post response', response);
+      });
   }
 }

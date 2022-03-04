@@ -12,6 +12,7 @@ import { SentenceCasePipe } from './pipes/sentence-case.pipe';
 import { AboutUsComponent } from './components/about-us/about-us.component';
 import { FilenotfoundComponent } from './components/filenotfound/filenotfound.component';
 import { CommonService } from './services/common.service';
+import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
   declarations: [
@@ -27,7 +28,8 @@ import { CommonService } from './services/common.service';
     CommonModule,
     AppRoutingModule,
     BrowserAnimationsModule,
-    FormsModule
+    FormsModule,
+    HttpClientModule
   ],
   providers: [CommonService],
   bootstrap: [AppComponent]
