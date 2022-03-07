@@ -53,7 +53,9 @@ export class ContactUsComponent implements OnInit, OnDestroy {
       this.clickHandler(event as MouseEvent)
     );
     // document.addEventListener('click', this.clickHandler);
-    this.commonService.createAuthor({name: 'Rick Roller', age: 100});
+    this.commonService.createAuthor({name: 'Rick Roller', age: 100}).subscribe(response => {
+      console.log('Response from createAuthor', response);
+    });
 
   }
 

@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable, Subject, takeUntil } from 'rxjs';
+import { Observable, of, Subject, switchMap, takeUntil } from 'rxjs';
 
 /*
 @Injectable({
@@ -31,16 +31,19 @@ export class CommonService {
     this.visitChangeSub.next(lastCount);
   }
 
-  createAuthor(authorData: Record<string, any>) {
+  createAuthor(authorData: Record<string, any>): Observable<Record<string, any>> {
     // const header = { 'api-key': 'ABCD' };
-    this.httpClient
-      .post('https://jsonplaceholder.typicode.com', {
+    return this.httpClient
+      .post('https://jsonplaceholder.typicode.com/posts', {
         // headers: header,
         // observe: 'body', // 'body' | 'response' | 'events'
         params: authorData
-      })
-      .subscribe((response) => {
-        console.log('HttpClient post response', response);
-      });
+      }).pipe(switchMap((value: Record<string, any>) => {
+        // return of(value);
+        const response = value['params'];
+        response.name = 'Ricky';
+        return of({title: response.name, age: response.age});
+      }))
+
   }
 }

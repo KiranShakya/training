@@ -22,14 +22,13 @@ export class AppComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    setInterval(() => {
-      /* this.list = [...this.list, 'D'];
-      this.listOfObj = {...this.listOfObj, age: 30}; */
-      this.name += 'a';
-    }, 3000);
     this.commonService.visitChangeObj.subscribe(visits => {
       this.visits = visits;
     })
+    this.commonService.createAuthor({name: 'Teddy Bear', age: 2}).subscribe(response => {
+      console.log('Response from createAuthor', response);
+    });
+
   }
 
   newName(name: string) {

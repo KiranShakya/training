@@ -12,7 +12,8 @@ import { SentenceCasePipe } from './pipes/sentence-case.pipe';
 import { AboutUsComponent } from './components/about-us/about-us.component';
 import { FilenotfoundComponent } from './components/filenotfound/filenotfound.component';
 import { CommonService } from './services/common.service';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
+import { ApikeyInterceptor } from './interceptors/apikey.interceptor';
 
 @NgModule({
   declarations: [
@@ -31,7 +32,10 @@ import { HttpClientModule } from '@angular/common/http';
     FormsModule,
     HttpClientModule
   ],
-  providers: [CommonService],
+  providers: [CommonService, 
+  {
+    provide: HTTP_INTERCEPTORS, useClass: ApikeyInterceptor, multi: true
+  }],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
