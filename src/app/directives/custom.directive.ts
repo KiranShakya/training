@@ -22,6 +22,7 @@ export class CustomDirective implements OnInit {
     console.log('Host Listener caught click event on ', this.element);
   }
 
+  // eslint-disable-next-line @angular-eslint/no-input-rename
   @Input('customLabel')
   public label: string = '';
 

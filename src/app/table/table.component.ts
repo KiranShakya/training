@@ -8,10 +8,10 @@ import { ChangeDetectionStrategy, Component, EventEmitter, Input, OnChanges, Out
 })
 export class TableComponent implements OnChanges {
   
-  @Input('name')
+  @Input()
   public name: string = '';
   
-  @Input('list')
+  @Input()
   public list: Array<string> = [''];
 
   @Output()
