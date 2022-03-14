@@ -13,8 +13,8 @@
 </div>
 <app-table *ngIf="name" [name]="name" [list]="list" (outputTest)="onOutput($event)"></app-table>
 <ul>
-  <li><a routerLink="about-us">About Us</a></li>
-  <li><a routerLink="contact">Contact</a></li>
+  <li><a routerLink="about-us">{{'about us' | translate }}</a></li>
+  <li><a routerLink="contact">{{'contact' | translate }}</a></li>
 </ul>
 <div>
   Visits: {{ visits }}

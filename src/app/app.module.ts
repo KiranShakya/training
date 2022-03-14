@@ -12,10 +12,25 @@ import { SentenceCasePipe } from './pipes/sentence-case.pipe';
 import { AboutUsComponent } from './components/about-us/about-us.component';
 import { FilenotfoundComponent } from './components/filenotfound/filenotfound.component';
 import { CommonService } from './services/common.service';
-import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
+import {
+  HttpClient,
+  HttpClientModule,
+  HTTP_INTERCEPTORS,
+} from '@angular/common/http';
 import { ApikeyInterceptor } from './interceptors/apikey.interceptor';
 import { ServiceWorkerModule } from '@angular/service-worker';
 import { environment } from '../environments/environment';
+import {
+  TranslateModule,
+  TranslateService,
+  TranslateLoader,
+} from '@ngx-translate/core';
+import { TranslateHttpLoader } from '@ngx-translate/http-loader';
+
+// AoT requires an exported function for factories
+export function HttpLoaderFactory(http: HttpClient) {
+  return new TranslateHttpLoader(http);
+}
 
 @NgModule({
   declarations: [
@@ -24,7 +39,7 @@ import { environment } from '../environments/environment';
     CustomDirective,
     SentenceCasePipe,
     AboutUsComponent,
-    FilenotfoundComponent
+    FilenotfoundComponent,
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'serverApp' }),
@@ -33,17 +48,40 @@ import { environment } from '../environments/environment';
     BrowserAnimationsModule,
     FormsModule,
     HttpClientModule,
+    TranslateModule.forRoot({
+      loader: {
+        provide: TranslateLoader,
+        useFactory: HttpLoaderFactory,
+        deps: [HttpClient],
+      },
+    }),
     ServiceWorkerModule.register('ngsw-worker.js', {
       enabled: environment.production,
       // Register the ServiceWorker as soon as the app is stable
       // or after 30 seconds (whichever comes first).
-      registrationStrategy: 'registerWhenStable:30000'
-    })
+      registrationStrategy: 'registerWhenStable:30000',
+    }),
   ],
-  providers: [CommonService, 
-  {
-    provide: HTTP_INTERCEPTORS, useClass: ApikeyInterceptor, multi: true
-  }],
-  bootstrap: [AppComponent]
+  providers: [
+    CommonService,
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: ApikeyInterceptor,
+      multi: true,
+    },
+  ],
+  bootstrap: [AppComponent],
 })
-export class AppModule { }
+export class AppModule {
+  constructor(
+    private readonly translateService: TranslateService,
+    private readonly http: HttpClient
+  ) {
+    const lng: string = 'en';
+    this.http.get(`./assets/i18n/${lng}.json`).subscribe((lang) => {
+      this.translateService.setTranslation(lng, lang);
+      this.translateService.use(lng);
+      this.translateService.defaultLang = 'en';
+    });
+  }
+}
